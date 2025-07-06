@@ -1,0 +1,4 @@
+Open the cat-tinder folder, Right-Click --> Open in Terminal; 
+OR cd "D:\Personal Projects\cat-tinder" in Windows PowerShell
+Run python -m http.server 8080
+Open the following: http://localhost:8080
