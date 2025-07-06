@@ -4,10 +4,10 @@ let loading = true;
 
 function preload() {
   let redditURL = 'https://www.reddit.com/r/cats/new.json?limit=30';
-  let proxyURL = 'https://api.allorigins.win/get?url=' + encodeURIComponent(redditURL);
+  let proxyURL = 'https://thingproxy.freeboard.io/fetch/' + redditURL;
 
   loadJSON(proxyURL, (rawData) => {
-    let data = JSON.parse(rawData.contents);
+    let data = JSON.parse(rawData);
 
     for (let post of data.data.children) {
       let url = post.data.url;
@@ -25,7 +25,15 @@ function preload() {
     } else {
       loading = false;
     }
-  });
+  }, (err) => {
+    console.error("Failed to load Reddit data:", err);
+    loading = false;
+});
+
+
+  console.log("Fetching from:", proxyURL);
+  console.log("Raw data:", rawData);
+
 }
 
 function preloadImages(index) {
@@ -70,6 +78,9 @@ function draw() {
 
   fill(0);
   text(`${cat.name}, ${cat.age} years`, width / 2, height - 50);
+
+  console.log("Cat images loaded:", catImages.length);
+
 }
 
 function mousePressed() {
